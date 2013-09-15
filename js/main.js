@@ -1,7 +1,3 @@
-function tick() {
-
-}
-
 function removeElements(size) {
   d3svg.selectAll('circle').data(c_queue)
   .exit()
