@@ -184,9 +184,12 @@ src: url("fonts/Absolut-Bold.otf") format("opentype");
 
 
 body {
-    background-color: #00FFA8;
     font-family: Absolut-Regular;
     color: white;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 h1 {
@@ -194,18 +197,50 @@ h1 {
     /*font-family: Absolut-Bold;*/
 }
 
+#gradient{
+  z-index: -999;
+  min-height: 100%;
+  min-width: 1024px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0.15, rgb(11,255,251)),
+            color-stop(0.58, rgb(0,255,162))
+        );
+}
+
+
+.main-container {
+    
+}
+
 .btn {
     font-family: Absolut-Bold;
     background-color: gray;
     border-radius: 50%;
     font-size: 2em;
-    border: 28px solid white;
+    border: 2px solid white;
+    
 }
 
 .btn-big {
+    border: 28px solid white;
     width: 300px;
     height: 300px;
     font-size: 3em;
+}
+
+.btn-small {
+    border: 10px solid white;
+    width: 100px;
+    height: 100px;
+    font-size: 1em;
 }
 
 .btn-red {
@@ -229,11 +264,6 @@ h1 {
 }
 
 
-
-
-
-
-
 .btn:active {
     background-color: black;
     color: white
@@ -244,6 +274,11 @@ h1 {
     text-align: center;
 }
 
+#buttonlist li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
 
 
 
