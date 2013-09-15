@@ -10,7 +10,10 @@ var g_game = '';
 
 var app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
-    fs = require('fs')
+    fs = require('fs'),
+    osc = require('node-osc');
+
+var oscclient = new osc.Client('127.0.0.1', 3333);
 
 app.listen(22222);
 
@@ -43,6 +46,9 @@ function broadcast_queue() {
     queue: g_queue,
     bartenders: g_bartenders
   });
+  oscclient.send('/queue', g_queue.join(','));
+  oscclient.send('/bartenders', JSON.stringify(g_bartenders));
+  oscclient.send('/game', g_game);
 }
 
 io.sockets.on('connection', function (socket) {
