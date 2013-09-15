@@ -1,15 +1,57 @@
 <h1>renderer</h1>
+<div id="render"></div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
   var socket = io.connect('http://localhost');
+  var d3svg = d3.select('#render').append('svg').attr('width', 300).attr('height', 100);
+  var c_queue = [];
+
+  Array.prototype.diff = function (a) {
+    return this.filter(function(i) { return !(a.indexOf(i) > -1);});
+  }
+
   socket.on('queue-update', function (data) {
-    console.log('queue-update', data);
+    //console.log('queue-update', data);
     // socket.emit('my other event', { my: 'data' });
     var li = document.createElement('li');
     var ul = document.getElementById('dummy');
     li.innerHTML = JSON.stringify(data);
     ul.appendChild(li);
+
+    if (data.queue.length < c_queue.length) {  
+      var diff = c_queue.diff(data.queue);
+      for (var i=0; i<diff.length; i++) {
+        var idx = c_queue.indexOf(diff[i]);
+        c_queue.splice(idx,1);
+        d3svg.selectAll('circle').data(c_queue).exit().remove();
+      }
+    } else {
+      var diff = data.queue.diff(c_queue);
+      for (var i=0; i<diff.length; i++) {
+        if (!(diff[i] in c_queue))
+          c_queue.push(diff[i]);
+      }
+    }
+
+    drawElements();
   });
+
+  socket.on('queue-add', function (data) {
+    c_queue[data.place] = data.id;
+  });
+
+  socket.on('queue-remove', function (data) {
+    console.log('queue-remove', data);
+  });
+
+  function drawElements() {
+    d3svg.selectAll('circle').data(c_queue).enter().append('circle')
+    .attr('cx', function (d) { return 30 * d; })
+    .attr('cy', 30)
+    .attr('r', 20);
+  }
+
 </script>
 <ul id="dummy">
 </ul>
