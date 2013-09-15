@@ -84,6 +84,14 @@
                   socket.emit('button-down', { id: id });
                 });
 
+                a.addEventListener('touchstart', function() {
+                    socket.emit('button-down', { id: id });
+                });
+
+                a.addEventListener('touchend', function() {
+                    socket.emit('button-up', { id: id });
+                });
+
                 a.addEventListener('mouseup', function() {
                   console.log('release');
                   socket.emit('button-up', { id: id });
