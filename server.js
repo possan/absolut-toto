@@ -86,7 +86,7 @@ io.sockets.on('connection', function (socket) {
 
       if (g_gamestate.players[data.id] >= 100) {
 
-        broadcast('game-over', { state: g_gamestate.players });
+        broadcast('game-over', { state: g_gamestate.players, winner: data.id });
         g_game = 'gameover';
         setTimeout(function() {
           broadcast('game-end', {});
