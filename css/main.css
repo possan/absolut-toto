@@ -1,13 +1,8 @@
-/*
- * HTML5 Boilerplate
- *
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
+
+
 
 /* ==========================================================================
-   Base styles: opinionated defaults
+   HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
    ========================================================================== */
 
 html,
@@ -15,37 +10,38 @@ button,
 input,
 select,
 textarea {
+
     color: #222;
 }
 
 body {
     font-size: 1em;
     line-height: 1.4;
+    
 }
 
-a {
-    color: #00e;
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
-a:visited {
-    color: #551a8b;
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
-a:hover {
-    color: #06e;
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
-
-/*
- * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
- */
 
 img {
     vertical-align: middle;
 }
-
-/*
- * Remove default fieldset styles.
- */
 
 fieldset {
     border: 0;
@@ -53,12 +49,114 @@ fieldset {
     padding: 0;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
-
 textarea {
     resize: vertical;
+}
+
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+/* ===== Initializr Styles ==================================================
+   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
+   ========================================================================== */
+
+body {
+    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    
+}
+
+.wrapper {
+    width: 90%;
+    margin: 0 5%;
+}
+
+/* ===================
+    ALL: Orange Theme
+   =================== */
+
+.header-container {
+    border-bottom: 20px solid #e44d26;
+}
+
+.footer-container,
+.main aside {
+    border-top: 20px solid #e44d26;
+}
+
+.header-container,
+.footer-container,
+.main aside {
+    background: #f16529;
+}
+
+.title {
+    color: white;
+}
+
+/* ==============
+    MOBILE: Menu
+   ============== */
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    display: block;
+    margin-bottom: 10px;
+    padding: 15px 0;
+
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+
+    color: white;
+    background: #e44d26;
+}
+
+nav a:hover,
+nav a:visited {
+    color: white;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+.main {
+    padding: 30px 0;
+}
+
+.main article h1 {
+    font-size: 2em;
+}
+
+.main aside {
+    color: white;
+    padding: 0px 5% 10px;
+}
+
+.footer-container footer {
+    color: white;
+    padding: 20px 0;
+}
+
+/* ===============
+    ALL: IE Fixes
+   =============== */
+
+.ie7 .title {
+    padding-top: 20px;
 }
 
 /* ==========================================================================
@@ -66,6 +164,69 @@ textarea {
    ========================================================================== */
 
 
+@font-face {
+font-family: Absolut-Medium;
+src: url("fonts/Absolut-Medium.otf") format("opentype");
+}
+
+@font-face {
+font-family: Absolut-Regular;
+src: url("fonts/Absolut-Regular.otf") format("opentype");
+}
+
+
+@font-face {
+font-family: Absolut-Bold;
+font-weight: bold;
+src: url("fonts/Absolut-Bold.otf") format("opentype");
+}
+
+
+
+body {
+    background-color: #00FFA8;
+    font-family: Absolut-Regular;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    /*font-family: Absolut-Bold;*/
+}
+
+.btn {
+    font-family: Absolut-Bold;
+    background-color: gray;
+    border-radius: 50%;
+    font-size: 2em;
+    border: 28px solid white;
+}
+
+.btn-big {
+    width: 300px;
+    height: 300px;
+    font-size: 3em;
+}
+
+.btn-red {
+    background-color: #FF9EA0;
+}
+
+.btn-pink {
+    background-color: #FF94FF;
+}
+
+.btn-yellow {
+    background-color: #FDFF99;
+}
+
+.btn-green {
+    background-color: #7FFF9F;
+}
+
+.btn-blue {
+    background-color: #A99DFF;
+}
 
 
 
@@ -73,8 +234,15 @@ textarea {
 
 
 
+.btn:active {
+    background-color: black;
+    color: white
 
+}
 
+.centered {
+    text-align: center;
+}
 
 
 
@@ -83,64 +251,119 @@ textarea {
 
 
 /* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 480px) {
+
+/* ====================
+    INTERMEDIATE: Menu
+   ==================== */
+
+    nav a {
+        float: left;
+        width: 27%;
+        margin: 0 1.7%;
+        padding: 25px 2%;
+        margin-bottom: 0;
+    }
+
+    nav li:first-child a {
+        margin-left: 0;
+    }
+
+    nav li:last-child a {
+        margin-right: 0;
+    }
+
+/* ========================
+    INTERMEDIATE: IE Fixes
+   ======================== */
+
+    nav ul li {
+        display: inline;
+    }
+
+    .oldie nav a {
+        margin: 0 0.7%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+
+/* ====================
+    WIDE: CSS3 Effects
+   ==================== */
+
+    .header-container,
+    .main aside {
+        -webkit-box-shadow: 0 5px 10px #aaa;
+           -moz-box-shadow: 0 5px 10px #aaa;
+                box-shadow: 0 5px 10px #aaa;
+    }
+
+/* ============
+    WIDE: Menu
+   ============ */
+
+    .title {
+        float: left;
+    }
+
+    nav {
+        float: right;
+        width: 38%;
+    }
+
+/* ============
+    WIDE: Main
+   ============ */
+
+    .main article {
+        float: left;
+        width: 57%;
+    }
+
+    .main aside {
+        float: right;
+        width: 28%;
+    }
+}
+
+@media only screen and (min-width: 1140px) {
+
+/* ===============
+    Maximal Width
+   =============== */
+
+    .wrapper {
+        width: 1026px; /* 1140px - 10% for margins */
+        margin: 0 auto;
+    }
+}
+
+/* ==========================================================================
    Helper classes
    ========================================================================== */
 
-/* Prevent callout */
-
-.nocallout {
-    -webkit-touch-callout: none;
-}
-
-.pressed {
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-/* A hack for HTML5 contenteditable attribute on mobile */
-
-textarea[contenteditable] {
-    -webkit-appearance: none;
-}
-
-/* A workaround for S60 3.x and 5.0 devices which do not animated gif images if
-   they have been set as display: none */
-
-.gifhidden {
-    position: absolute;
-    left: -100%;
-}
-
-/*
- * Image replacement
- */
-
 .ir {
     background-color: transparent;
-    background-repeat: no-repeat;
     border: 0;
-    direction: ltr;
-    display: block;
     overflow: hidden;
-    text-align: left;
-    text-indent: -999em;
+    *text-indent: -9999px;
 }
 
-.ir br {
-    display: none;
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
 }
-
-/*
- * Hide from both screenreaders and browsers: h5bp.com/u
- */
 
 .hidden {
     display: none !important;
     visibility: hidden;
 }
-
-/*
- * Hide only visually, but have it available for screenreaders: h5bp.com/v
- */
 
 .visuallyhidden {
     border: 0;
@@ -153,11 +376,6 @@ textarea[contenteditable] {
     width: 1px;
 }
 
-/*
- * Extends the .visuallyhidden class to allow the element to be focusable
- * when navigated to via the keyboard: h5bp.com/p
- */
-
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
     clip: auto;
@@ -168,22 +386,13 @@ textarea[contenteditable] {
     width: auto;
 }
 
-/*
- * Hide visually and from screenreaders, but maintain layout
- */
-
 .invisible {
     visibility: hidden;
 }
 
-/**
- * Clearfix helper
- * Used to contain floats: h5bp.com/q
- */
-
 .clearfix:before,
 .clearfix:after {
-    content: "";
+    content: " ";
     display: table;
 }
 
@@ -191,26 +400,77 @@ textarea[contenteditable] {
     clear: both;
 }
 
-/*
- * For IE 6/7 only
- * Include this rule to trigger hasLayout and contain floats.
- */
-
 .clearfix {
     *zoom: 1;
 }
 
 /* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   Theses examples override the primary ('mobile first') styles.
-   Modify as content requires.
+   Print styles
    ========================================================================== */
 
-@media only screen and (min-width: 800px) {
-    /* Style adjustments for viewports that meet the condition */
-}
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-       only screen and (min-resolution: 144dpi) {
-    /* Style adjustments for viewports that meet the condition */
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
 }
