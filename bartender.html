@@ -4,6 +4,11 @@
 
 <p>Customer #<input id="customer"> <button id="serve">SERVE</button> <button id="done">DONE</button></p>
 
+<p>
+  <button id="startgame">START GAME</button>
+  <button id="endgame">END GAME</button>
+  </p>
+
 <hr/>
 
 <ul id="dummy">
@@ -21,6 +26,8 @@
   var customer = document.getElementById('customer');
   var serve = document.getElementById('serve');
   var done = document.getElementById('done');
+  var startgame = document.getElementById('startgame');
+  var endgame = document.getElementById('endgame');
 
   done.addEventListener('click', function() {
     socket.emit('bartender-done', {
@@ -35,6 +42,17 @@
       customer: customer.value
     });
     // customer.value = '';
+  });
+
+  startgame.addEventListener('click', function() {
+    socket.emit('game-start', {
+      game: 'test'
+    });
+  });
+
+  endgame.addEventListener('click', function() {
+    socket.emit('game-end', {
+    });
   });
 
   var socket = io.connect('http://localhost');
