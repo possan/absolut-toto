@@ -1,15 +1,48 @@
 <h1>Bartender</h1>
+<p><input id="namex" value="Bartender John Doe"></input></p>
+<hr />
+
+<p>Customer #<input id="customer"> <button id="serve">SERVE</button> <button id="done">DONE</button></p>
+
+<hr/>
+
+<ul id="dummy">
+</ul>
+
+<hr/>
+
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
+  var ul = document.getElementById('dummy');
+
+  var namex = document.getElementById('namex');
+  var customer = document.getElementById('customer');
+  var serve = document.getElementById('serve');
+  var done = document.getElementById('done');
+
+  done.addEventListener('click', function() {
+    socket.emit('bartender-done', {
+      bartender: namex.value,
+      customer: customer.value
+    });
+  });
+
+  serve.addEventListener('click', function() {
+    socket.emit('bartender-serve', {
+      bartender: namex.value,
+      customer: customer.value
+    });
+    // customer.value = '';
+  });
+
   var socket = io.connect('http://localhost');
   socket.on('queue-update', function (data) {
     console.log('queue-update', data);
     // socket.emit('my other event', { my: 'data' });
     var li = document.createElement('li');
-    var ul = document.getElementById('dummy');
     li.innerHTML = JSON.stringify(data);
     ul.appendChild(li);
   });
 </script>
-<ul id="dummy">
-</ul>
