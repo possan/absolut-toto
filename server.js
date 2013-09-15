@@ -3,9 +3,10 @@
 //
 
 var g_queue = [];
-var g_index = 1;
+var g_index = 10;
 var g_allsockets = [];
 var g_bartenders = {};
+var g_game = '';
 
 var app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
@@ -38,6 +39,7 @@ function broadcast(eventname, eventdata) {
 
 function broadcast_queue() {
   broadcast('queue-update', {
+    game: g_game,
     queue: g_queue,
     bartenders: g_bartenders
   });
@@ -95,6 +97,18 @@ io.sockets.on('connection', function (socket) {
       broadcast('queue-remove', { place: idx, id: id });
     }
 
+    broadcast_queue();
+  });
+
+  socket.on('game-start', function (data) {
+    console.log('begin game');
+    g_game = data.game;
+    broadcast_queue();
+  });
+
+  socket.on('game-end', function (data) {
+    console.log('end game');
+    g_game = '';
     broadcast_queue();
   });
 
