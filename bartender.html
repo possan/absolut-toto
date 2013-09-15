@@ -1,1 +1,15 @@
-bartendervy
+<h1>Bartender</h1>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost');
+  socket.on('queue-update', function (data) {
+    console.log('queue-update', data);
+    // socket.emit('my other event', { my: 'data' });
+    var li = document.createElement('li');
+    var ul = document.getElementById('dummy');
+    li.innerHTML = JSON.stringify(data);
+    ul.appendChild(li);
+  });
+</script>
+<ul id="dummy">
+</ul>

@@ -1,23 +1,37 @@
 <h1>Knapp</h1>
+<button id="a">Loading...</button>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
+  var a = document.getElementById('a');
+  var id = '';
+
   var socket = io.connect('http://localhost');
+
   socket.on('welcome', function (data) {
     console.log('welcome', data);
 
-    socket.emit('my other event', { my: 'data' });
+    // request button id from server
+    socket.emit('get-button-id', {});
 
-    var a = document.getElementById('a');
-
-    a.addEventListener('mouseDown', function() {
+    // button event handlers
+    a.addEventListener('mousedown', function() {
     	console.log('press');
+      socket.emit('button-down', { id: id });
     });
 
-    a.addEventListener('mouseUp', function() {
+    a.addEventListener('mouseup', function() {
     	console.log('release');
+      socket.emit('button-up', { id: id });
     });
 
   });
+
+  socket.on('button-id', function (data) {
+    id = data.id;
+    console.log('your button id is: ' + id);
+    a.innerHTML = '[' + data.id + ']';
+  });
+
 </script>
-<button id="a">BUTTON</button>
