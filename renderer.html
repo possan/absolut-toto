@@ -42,25 +42,17 @@
                 
                     <div class="centered">
                     <div id="render"></div>
-                    	<ul id="buttonlist">
+                    	<!--<ul id="buttonlist">
                     		<li><button id="a" class="btn btn-small btn-red">PUSH</button></li>
                     		<li><button id="a" class="btn btn-small btn-blue">PUSH</button></li>
                     		<li><button id="a" class="btn btn-small btn-pink">PUSH</button></li>
                     		<li><button id="a" class="btn btn-small btn-green">PUSH</button></li>
-						</ul>
-                        
+  						        </ul>-->
                     </div>
-                    
                     <div class="centered">
                         <br>
                         <img src="img/ABSOLUT_Logo_white_croped.png" height="35px">
                     </div>
-                
-
-                
-
-               
-
             </div> <!-- #main -->
         </div> <!-- #main-container -->
 
@@ -76,48 +68,31 @@
 
         <script>
           var socket = io.connect('http://localhost');
-          var d3svg = d3.select('#render').append('svg').attr('width', 600).attr('height', 100);
+          var circle_size = 50;
+          var width = 960;
+          var height = 300;
+          var layout = d3.layout.pack();
+          var d3svg = d3.select('#render').append('svg')
+                      .attr('width', width)
+                      .attr('height', height);
           var c_queue = [];
 
-          Array.prototype.diff = function (a) {
-            return this.filter(function(i) { return !(a.indexOf(i) > -1);});
-          }
-
           socket.on('queue-update', function (data) {
-            //console.log('queue-update', data);
+            console.log('queue-update', data);
             // socket.emit('my other event', { my: 'data' });
-
-            if (data.queue.length < c_queue.length) {  
-              var diff = c_queue.diff(data.queue);
-              for (var i=0; i<diff.length; i++) {
-                var idx = c_queue.indexOf(diff[i]);
-                c_queue.splice(idx,1);
-                
-                d3svg.selectAll('circle').data(c_queue)
-                .exit()
-                .transition()
-                .attr('r', 0).remove();
-              }
-            } else {
-              var diff = data.queue.diff(c_queue);
-              for (var i=0; i<diff.length; i++) {
-                if (!(diff[i] in c_queue))
-                  c_queue.push(diff[i]);
-              }
-            }
-
-            drawElements();
           });
 
           socket.on('queue-add', function (data) {
-            console.log(data);
             c_queue[data.place] = data.id;
 
-            drawElements();
+            drawElements(circle_size);
           });
 
           socket.on('queue-remove', function (data) {
-            console.log('queue-remove', data);
+            var idx = c_queue.indexOf(data.id);
+            c_queue.splice(idx,1);
+
+            removeElements(circle_size);
           });
         </script>
     </body>
