@@ -4,5 +4,6 @@ function drawElements() {
   .attr('cy', 30)
   .attr('r', 0)
   .transition()
+  .delay(function (d, i) { return 10 * i; })
   .attr('r', 25);
 }
