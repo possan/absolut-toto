@@ -1,0 +1,63 @@
+ul#bottles {
+	position: relative;
+	height: 250px;
+	width: 500px;
+	margin: 0 auto;
+}
+
+ul#bottles li {
+	display: block;
+	position: relative;
+	float: left;
+	width: 100px;
+	height: 200px;
+	background-image: url('../img/gamebottle_empty.png');
+	background-size: cover;
+	background-position: bottom center;
+}
+
+ul#bottles li div {
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	background-image: url('../img/gamebottle_filled.png');
+	background-size: cover;
+	background-position: bottom center;
+}
+
+ul#bottles li span {
+	position: absolute;
+	bottom: -30px;
+	left: 0px;
+	width: 100%;
+	text-align: center
+}
+
+div#instructions {
+	text-align: center;
+}
+
+div#start {
+	text-align: center;
+}
+
+div#ingame {
+	text-align: center;
+}
+
+div#gameover {
+	text-align: center;
+}
+
+h1 {
+	font-size: 600%;
+}
+h2 {
+	font-size: 500%;
+}
+h3 {
+	font-size: 400%;
+}
+h4 {
+	font-size: 300%;
+}
