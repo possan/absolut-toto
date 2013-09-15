@@ -24,7 +24,11 @@
       for (var i=0; i<diff.length; i++) {
         var idx = c_queue.indexOf(diff[i]);
         c_queue.splice(idx,1);
-        d3svg.selectAll('circle').data(c_queue).exit().remove();
+        
+        d3svg.selectAll('circle').data(c_queue)
+        .exit()
+        .transition()
+        .attr('r', 0).remove();
       }
     } else {
       var diff = data.queue.diff(c_queue);
@@ -47,9 +51,11 @@
 
   function drawElements() {
     d3svg.selectAll('circle').data(c_queue).enter().append('circle')
-    .attr('cx', function (d) { return 30 * d; })
+    .attr('cx', function (d) { return 50 * d; })
     .attr('cy', 30)
-    .attr('r', 20);
+    .attr('r', 0)
+    .transition()
+    .attr('r', 25);
   }
 
 </script>
