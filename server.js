@@ -16,19 +16,12 @@ app.listen(22222);
 function handler (req, res) {
   console.log('req.url', req.url);
 
-  var filename = 'index.html';
-  if (req.url == '/button') {
-    filename = 'button.html';
-  } else if (req.url == '/bartender') {
-    filename = 'bartender.html';
-  } else if (req.url == '/renderer') {
-    filename = 'renderer.html';
-  }
-
-  fs.readFile(__dirname + '/' + filename,
+  var filename = req.url;
+  if (filename == '/') filename = '/index.html';
+  fs.readFile(__dirname + '' + filename,
     function (err, data) {
       if (err) {
-        res.writeHead(500);
+        res.writeHead(404);
         return res.end('Error');
       }
       res.writeHead(200);

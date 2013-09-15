@@ -37,22 +37,14 @@
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
-
         <h1>Knapp</h1>
         <h2 id="namex">Loading...</h2>
         <button id="a">Press</button>
         <button id="b">Release</button>
-
-
-
-
         <script src="js/vendor/zepto.min.js"></script>
         <script src="js/helper.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script src="/socket.io/socket.io.js"></script>
         <script>
-
 
             var a = document.getElementById('a');
             var b = document.getElementById('b');
@@ -63,32 +55,32 @@
 
             var socket = io.connect('http://localhost');
 
-            // button event handlers
-            a.addEventListener('click', function() {
-              console.log('press');
-              socket.emit('button-down', { id: id });
-              a.disabled = true;
-              b.disabled = false;
-            });
-
-            b.addEventListener('click', function() {
-              console.log('release');
-              socket.emit('button-up', { id: id });
-              a.disabled = false;
-              b.disabled = true;
+            socket.on('welcome', function (data) {
+                console.log('welcome', data);
+                // request button id from server
+                socket.emit('get-button-id', {});
+                // button event handlers
+                a.addEventListener('click', function() {
+                    console.log('press');
+                    socket.emit('button-down', { id: id });
+                    a.disabled = true;
+                    b.disabled = false;
+                });
+                b.addEventListener('click', function() {
+                    console.log('release');
+                    socket.emit('button-up', { id: id });
+                    a.disabled = false;
+                    b.disabled = true;
+                });
             });
 
             socket.on('button-id', function (data) {
               id = data.id;
               console.log('your button id is: ' + id);
-              namex.innerText = '#' + id;
+              namex.innerHTML = '#' + id;
             });
 
-
-
-
         </script>
-
     </body>
 </html>
 
