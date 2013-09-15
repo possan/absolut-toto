@@ -1,0 +1,39 @@
+
+
+
+* N knappar
+
+* Varje knapp håller en plats och får ett könummer
+
+
+
+
+ny knapp ->
+	{ type: 'register' } -> { id: 'id' }
+
+knapp ner ->
+	{ type: 'press', id: 'id' }
+
+kö uppdaterad ->
+	{ type: 'queue-updated', queue: [ '', '', '', '' ] }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
