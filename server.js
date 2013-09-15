@@ -92,6 +92,7 @@ io.sockets.on('connection', function (socket) {
     if (idx != -1) {
       g_queue.splice(idx, 1);
       // delete(g_queue[idx]);
+      broadcast('queue-remove', { place: idx, id: id });
     }
 
     broadcast_queue();
