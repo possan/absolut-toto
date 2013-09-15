@@ -3,7 +3,7 @@
 //
 
 var g_queue = [];
-var g_index = 0;
+var g_index = 1;
 var g_allsockets = [];
 var g_bartenders = {};
 
