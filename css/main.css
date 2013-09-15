@@ -226,14 +226,15 @@ h1 {
     border-radius: 50%;
     font-size: 2em;
     border: 2px solid white;
+    outline: none;
     
 }
 
 .btn-big {
     border: 28px solid white;
-    width: 300px;
-    height: 300px;
-    font-size: 3em;
+    width: 260px;
+    height: 260px;
+    font-size: 2em;
 }
 
 .btn-small {
