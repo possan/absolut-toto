@@ -5,7 +5,7 @@
 <p>Customer #<input id="customer"> <button id="serve">SERVE</button> <button id="done">DONE</button></p>
 
 <p>
-  <button id="startgame">START GAME</button>
+  <button id="startgame">START SPAM GAME</button>
   <button id="endgame">END GAME</button>
   </p>
 
@@ -46,7 +46,7 @@
 
   startgame.addEventListener('click', function() {
     socket.emit('game-start', {
-      game: 'test'
+      game: 'spam'
     });
   });
 
