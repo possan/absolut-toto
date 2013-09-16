@@ -11,7 +11,7 @@ function removeElements(data) {
   elem.addClass('closing');
   setTimeout(function() {
     elem.remove();
-  }, 400);
+  }, 250);
 }
 
 function drawElements(data) {
