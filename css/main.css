@@ -298,13 +298,23 @@ h1 {
     height: 300px; 
     position: relative;
     width: 100%;
+
+
 }
 
-#buttonlist li {
+/*#buttonlist li {
     display: inline;
     list-style-type: none;
     padding-right: 20px;
-}
+}*/
+
+/*.player {
+    
+  
+
+    -webkit-transition: all 0.14s ease-in-out;
+    -webkit-transform: scale( 0.1 );
+}*/
 
 .player.show {
     opacity: 1;

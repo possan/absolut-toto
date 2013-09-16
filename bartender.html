@@ -94,7 +94,6 @@
           var reactgame = document.getElementById('reactgame');
           var endgame = document.getElementById('endgame');
           var hasWinner = false;
-          var currentGame = '';
 
           $('.player').click(function(e) {
             console.log('start serving', last_id);
@@ -123,7 +122,6 @@
             socket.emit('game-start', {
               game: 'spam'
             });
-            currentGame = 'spam';
             hasWinner = false;
           });
 
@@ -131,13 +129,11 @@
             socket.emit('game-start', {
               game: 'react'
             });
-            currentGame = 'react';
             hasWinner = false;
           })
 
           endgame.addEventListener('click', function() {
             socket.emit('game-end', {
-              game: currentGame
             });
           });
 
