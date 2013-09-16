@@ -213,10 +213,9 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('game-end', function (data) {
     console.log('end game', data);
-    g_game = data.game;
     broadcast_queue();
 
-    if (g_game == 'react') {
+    if (data.game == 'react') {
       var sortable = [];
       for (var id in g_gamestate.players) {
         sortable.push([id, g_gamestate.players[id]]);
@@ -225,6 +224,11 @@ io.sockets.on('connection', function (socket) {
       winner = winner[0];
 
       broadcast('game-over', { state: g_gamestate.players, winner: winner });
+
+      g_game = '';
+
+    } else {
+      g_game = '';
     }
   });
 
