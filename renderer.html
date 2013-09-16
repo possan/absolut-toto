@@ -62,7 +62,7 @@
         <script src="js/main.js"></script>
 
         <script>
-          var socket = io.connect('http://localhost');
+          var socket = io.connect('http://'+hostname);
           var circle_size = 50;
           var c_queue = [];
 
@@ -86,7 +86,7 @@
           });
 
           socket.on('game-init', function (data) {
-            location = 'game.html';
+            location = data.game+'.html';
           });
         </script>
     </body>

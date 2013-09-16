@@ -56,8 +56,8 @@
                      <div class="centered">
                       
                       <ul id="buttonlist">
-                        <li><button id="startgame" class="btn btn-small btn-black" id="startgame">SPAM GAME</button></li>
-                        <li><button id="a" class="btn btn-small btn-black">REACT GAME</button></li>
+                        <li><button id="spamgame" class="btn btn-small btn-black" id="startgame">SPAM GAME</button></li>
+                        <li><button id="reactgame" class="btn btn-small btn-black">REACT GAME</button></li>
                          <li><button id="endgame" class="btn btn-small btn-red">END GAME</button></li>
                         
                         
@@ -91,13 +91,14 @@
         <script>
           var ul = document.getElementById('dummy');
           var c_queue = [];
-          var socket = io.connect('http://localhost');
+          var socket = io.connect('http://'+hostname);
 
           //var namex = document.getElementById('namex');
           var customer = document.getElementById('customer');
           var serve = document.getElementById('serve');
           var done = document.getElementById('done');
           var startgame = document.getElementById('startgame');
+          var reactgame = document.getElementById('reactgame');
           var endgame = document.getElementById('endgame');
           var hasWinner = false;
 
@@ -118,12 +119,19 @@
             hasWinner = false;
           });
 
-          startgame.addEventListener('click', function() {
+          spamgame.addEventListener('click', function() {
             socket.emit('game-start', {
               game: 'spam'
             });
             hasWinner = false;
           });
+
+          reactgame.addEventListener('click', function() {
+            socket.emit('game-start', {
+              game: 'react'
+            });
+            hasWinner = false;
+          })
 
           endgame.addEventListener('click', function() {
             socket.emit('game-end', {

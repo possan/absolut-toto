@@ -71,7 +71,7 @@
             document.addEventListener("touchstart", function() {},false);
               var a = document.getElementById('a');
               var id = '';
-              var socket = io.connect('http://172.16.10.72');
+              var socket = io.connect('http://'+hostname);
 
               socket.on('welcome', function (data) {
                 console.log('welcome', data);

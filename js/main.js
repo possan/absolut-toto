@@ -4,6 +4,7 @@ var colors = [
   "#FF94FF",
   "#7FFF9F"
 ];
+var hostname = document.location.hostname;
 
 function removeElements(data) {
   var elem = $('#render').find('.no_'+data.id);

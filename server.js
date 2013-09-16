@@ -103,6 +103,12 @@ io.sockets.on('connection', function (socket) {
       console.log(g_gamestate.players);
 
       broadcast('game-update', { state: g_gamestate.players });
+    } else if (g_game == 'react') {
+      
+      if (typeof(g_gamestate.players[data.id]) == 'undefined')
+        g_gamestate.players[data.id] = 0;
+
+
 
     } else {
       var pos = g_queue.length;
@@ -148,7 +154,7 @@ io.sockets.on('connection', function (socket) {
         players: {}
       };
 
-      broadcast('game-init', { state: g_gamestate.players });
+      broadcast('game-init', { state: g_gamestate.players, game: g_game });
       setTimeout(function() {
         broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
       }, 10);
@@ -174,9 +180,9 @@ io.sockets.on('connection', function (socket) {
         players: {}
       };
 
-      broadcast('game-init', { state: g_gamestate.players });
+      broadcast('game-init', { state: g_gamestate.players, game: g_game });
       setTimeout(function() {
-        broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
+        broadcast('game-prepare', { state: g_gamestate.players, time: 6 });
       }, 10);
       setTimeout(function () {
         broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
@@ -195,7 +201,7 @@ io.sockets.on('connection', function (socket) {
       }, 5000);
       setTimeout(function () {
         broadcast('game-start', { state: g_gamestate.players, time: 0 });
-      }, 5000 + Math.floor(Math.random() * (30 - 10))*100);
+      }, 6000);
     }
 
     broadcast_queue();
