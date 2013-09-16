@@ -231,8 +231,10 @@ h1 {
 .btn {
     font-family: Absolut-Bold;
     background-color: gray;
+    display: inline-block;
     border-radius: 50%;
     font-size: 2em;
+    margin: 0 10px;
     border: 2px solid white;
     outline: none;
     -webkit-touch-callout: none;
@@ -245,8 +247,8 @@ h1 {
 
 .btn-big {
     border: 28px solid white;
-    width: 260px;
-    height: 260px;
+    width: 200px;  
+    height: 200px;
     font-size: 2em;
 }
 
@@ -297,13 +299,15 @@ h1 {
     height: 300px; 
     position: relative;
     width: 100%;
+
+
 }
 
-#buttonlist li {
+/*#buttonlist li {
     display: inline;
     list-style-type: none;
     padding-right: 20px;
-}
+}*/
 
 /*.player {
     
@@ -322,14 +326,14 @@ h1 {
     font-size: 1.4em;
     font-weight: 700;
     margin-top: 100px;
-    line-height: 60px;
+    line-height: 20px;
 }
 
 .playeranim {
 
 
     -webkit-transition: all 0.24s ease-in-out;
-    -webkit-transform: scale( 0.1 );
+    -webkit-transform: scale( 0 );
 }
 
 .opened {
