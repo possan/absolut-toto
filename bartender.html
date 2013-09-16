@@ -43,10 +43,7 @@
                     <div class="centered">
                       <div id="render" class="centered"></div>
                       <ul id="buttonlist">
-                        <li><button id="a" class="btn btn-small btn-red">PUSH</button></li>
-                        <li><button id="a" class="btn btn-small btn-blue">PUSH</button></li>
-                        <li><button id="a" class="btn btn-small btn-pink">PUSH</button></li>
-                        <li><button id="a" class="btn btn-small btn-green">PUSH</button></li>
+                        
                       </ul>
                     </div>
 
@@ -62,15 +59,12 @@
                       <ul id="buttonlist">
                         <li><button id="startgame" class="btn btn-small btn-black" id="startgame">SPAM GAME</button></li>
                         <li><button id="a" class="btn btn-small btn-black">REACT GAME</button></li>
-                         <li><button id="a" class="btn btn-small btn-red">END GAME</button></li>
+                         <li><button id="endgame" class="btn btn-small btn-red">END GAME</button></li>
                         
                         
                       </ul>
                     </div>
-                    <p>
-                      <button id="startgame">START SPAM GAME</button>
-                      <button id="endgame">END GAME</button>
-                    </p>
+                  
 
                     <ul id="dummy">
                     </ul>
@@ -97,6 +91,8 @@
 
         <script>
           var ul = document.getElementById('dummy');
+          var c_queue = [];
+          var socket = io.connect('http://localhost');
 
           //var namex = document.getElementById('namex');
           var customer = document.getElementById('customer');
@@ -131,14 +127,36 @@
             });
           });
 
-          var socket = io.connect('http://localhost');
           socket.on('queue-update', function (data) {
             console.log('queue-update', data);
             // socket.emit('my other event', { my: 'data' });
-            var li = document.createElement('li');
+           /* var li = document.createElement('li');
             li.innerHTML = JSON.stringify(data);
-            ul.appendChild(li);
+            ul.appendChild(li);*/
+
+
+            if (data.queue.length > 0) drawStaticElements(data.queue[0]);
+
+            
           });
+
+          socket.on('queue-add', function (data) {
+            console.log('queue-add', data);
+            c_queue[data.place] = data.id;
+            console.log("Data id: ",data.id);
+            drawStaticElements(data);
+
+            
+          });
+
+          socket.on('queue-remove', function (data) {
+            var idx = c_queue.indexOf(data.id);
+            c_queue.splice(idx,1);
+
+            //removeElements(data);
+          });
+
+          
         </script>
     </body>
 </html>
