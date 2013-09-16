@@ -23,6 +23,7 @@ ul#bottles li div {
 	background-image: url('../img/gamebottle_filled.png');
 	background-size: cover;
 	background-position: bottom center;
+	transition: all 0.12s linear;
 }
 
 ul#bottles li span {
@@ -37,6 +38,12 @@ div#instructions {
 	text-align: center;
 }
 
+#instructions p {
+	font-size: 1.8em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
 div#start {
 	text-align: center;
 }
@@ -49,6 +56,71 @@ div#gameover {
 	text-align: center;
 }
 
+#winner {
+	/*text-shadow: 0 4px 18px rgba(0,0,0,0.25);*/
+}
+
+#winner p span {
+	border: 5px solid #fff;
+	border-radius: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+	height: 70px;
+	width: 70px;
+}
+
+#winner p ~ p {
+	font-size: 0.5em;
+}
+
+.win {
+	color: #fff;
+	-webkit-animation-name: flash-winner;
+  -webkit-animation-duration: 0.2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-fill: both;
+}
+
+@-webkit-keyframes flash-winner {
+  from {
+    text-shadow: 0 0 8px rgba(0,0,0,0.25);
+  }
+  to {
+  	color: rgba(255,255,255,0.25);
+    text-shadow: 0 0 24px rgba(255,255,255,1);
+  }
+}
+
+@-webkit-keyframes flash-winner-circle {
+	from {
+		box-shadow: 0 0 8px rgba(0,0,0,0.25);
+	}
+	to {
+		background-color: rgba(255,255,255,0.25);
+		box-shadow: 0 0 24px rgba(255,255,255,1);
+	}
+}
+
+.blink {
+	-webkit-animation-name: blink;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 0.18s;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes blink {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+
 h1 {
 	font-size: 600%;
 }
@@ -60,4 +132,15 @@ h3 {
 }
 h4 {
 	font-size: 300%;
+}
+
+ul#bottles .player-badge {
+	background: none;
+	border: 5px solid #fff;
+	border-radius: 100%;
+	box-sizing: border-box;
+	bottom: -80px;
+	height: 50px;
+	left: 25px;
+	width: 50px;
 }

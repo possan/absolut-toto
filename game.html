@@ -39,7 +39,8 @@
             <div class="main wrapper clearfix">
 
                 <div id="instructions">
-                  <h3>SPAM!</h3>
+                  <h3>LETS SPAM!</h3>
+                  <p>Hit the button as many times as possible!<br>First to fill the bottle wins.</p>
                   <h4>Starts in</h4>
                   <h2 id="countdown"></h2>
                 </div>
@@ -49,7 +50,7 @@
                 <div id="ingame">
                   <ul id="bottles">
                   </ul>
-                  <h2>SPAM!</h2>
+                  <h2 class="blink">SPAM!</h2>
                 </div>
 
                 <div id="gameover">
@@ -58,7 +59,6 @@
                 </div>
 
                 <div class="centered">
-                    <br>
                     <img src="img/ABSOLUT_Logo_white_croped.png" height="35px">
                 </div>
             </div> <!-- #main -->
@@ -67,20 +67,12 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
         <script>
           var socket = io.connect('http://localhost');
-          var circle_size = 50;
-          var width = 960;
-          var height = 300;
-          var layout = d3.layout.pack();
-          var d3svg = d3.select('#render').append('svg')
-                      .attr('width', width)
-                      .attr('height', height);
           var c_queue = [];
 
           $('#instructions').show();
@@ -108,11 +100,12 @@
             $('#start').hide();
             $('#ingame').hide();
             $('#gameover').show();
-            $('#winner').html('WINNER #'+data.winner);
+            $('#winner').html('<p class="win">WINNER &#9758; <span style="background-color:'+colors[data.winner%colors.length]+';"></span></p><p>The bartender will now take your order.</p>');
           });
 
           socket.on('game-end', function (data) {
-            location = 'renderer.html';
+            console.log("game end");
+            //location = 'renderer.html';
           });
 
           socket.on('game-update', function (data) {
@@ -123,8 +116,10 @@
             for(player in data.state) {
               var hits = data.state[player];
               var cls = 'bottle50';
-              html += '<li class="bottle"><div style=\"height:'+hits+'%;\"></div><span>'+hits+'</span></li>';
+              html += '<li class="bottle"><div style=\"height:'+hits+'%;\"></div><span>'+hits+'</span>';
+              html += '<div class="player-badge" style="background-color:'+colors[player%colors.length]+';"></div></li>';
             }
+            console.log(html);
             $('#bottles').html(html);
 
           });

@@ -88,6 +88,10 @@
 
             removeElements(data);
           });
+
+          socket.on('game-init', function (data) {
+            location = 'game.html';
+          });
         </script>
     </body>
 </html>
