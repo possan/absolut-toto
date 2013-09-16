@@ -71,7 +71,6 @@ body {
 }
 
 .wrapper {
-    width: 90%;
     margin: 0 5%;
 }
 
@@ -455,7 +454,6 @@ h1 {
    =============== */
 
     .wrapper {
-        width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
     }
 }
