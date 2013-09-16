@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title></title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -41,27 +41,19 @@
                     
                 
                     <div class="centered">
-                      <div class="centered">
                         <div class="player btn btn-small"></div>
-                      </div>
                     </div>
 
-                    
-                    
+                    <br/>
 
+                    <div class="centered">
+                        <button id="done" class="btn btn-small">DONE</button>
+                        <br/>
+                        <br/>
 
-
-                    <p class="serve centered">Customer #<input id="customer"> <button id="serve" class="btn btn-small">SERVE</button> <button id="done" class="btn btn-small">DONE</button></p>
-                    
-                     <div class="centered">
-                      
-                      <ul id="buttonlist">
-                        <li><button id="spamgame" class="btn btn-small btn-black" id="startgame">SPAM GAME</button></li>
-                        <li><button id="reactgame" class="btn btn-small btn-black">REACT GAME</button></li>
-                         <li><button id="endgame" class="btn btn-small btn-red">END GAME</button></li>
-                        
-                        
-                      </ul>
+                        <button id="spamgame" class="btn btn-small btn-black" id="startgame">SPAM GAME</button>
+                        <button id="reactgame" class="btn btn-small btn-black">REACT GAME</button>
+                        <button id="endgame" class="btn btn-small btn-red">END GAME</button>
                     </div>
                   
 
@@ -92,6 +84,7 @@
           var ul = document.getElementById('dummy');
           var c_queue = [];
           var socket = io.connect('http://'+hostname);
+          var last_id = '';
 
           //var namex = document.getElementById('namex');
           var customer = document.getElementById('customer');
@@ -102,21 +95,27 @@
           var endgame = document.getElementById('endgame');
           var hasWinner = false;
 
-          done.addEventListener('click', function() {
-            socket.emit('bartender-done', {
-              //bartender: namex.value,
-              customer: customer.value
-            });
-            hasWinner = false;
+          $('.player').click(function(e) {
+            console.log('start serving', last_id);
+            if (last_id != '') {
+              socket.emit('bartender-serve', {
+                //bartender: namex.value,
+                customer: last_id
+              });
+              // customer.value = '';
+              hasWinner = false;
+            }
           });
 
-          serve.addEventListener('click', function() {
-            socket.emit('bartender-serve', {
-              //bartender: namex.value,
-              customer: customer.value
-            });
-            // customer.value = '';
-            hasWinner = false;
+          done.addEventListener('click', function() {
+            if (last_id != '') {
+              socket.emit('bartender-done', {
+                //bartender: namex.value,
+                customer: last_id
+              });
+              hasWinner = false;
+              last_id = '';
+            }
           });
 
           spamgame.addEventListener('click', function() {
@@ -140,8 +139,13 @@
 
           socket.on('queue-update', function (data) {
             console.log('queue-update', data);
-
-            if (data.queue.length > 0 && !hasWinner) drawStaticElements(data.queue[0]);
+            if (data.queue.length > 0 && !hasWinner) {
+              last_id = data.queue[0];
+              drawStaticElements(last_id);
+            } else {
+              last_id = '';
+              drawStaticElements(last_id);
+            }
           });
 
           socket.on('queue-add', function (data) {
@@ -158,7 +162,7 @@
             drawStaticElements(data.winner);
             hasWinner = true;
           });
-          
+
         </script>
     </body>
 </html>
