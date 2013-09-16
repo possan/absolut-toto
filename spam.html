@@ -82,9 +82,12 @@
 
           socket.on('game-prepare', function (data) {
             $('#countdown').text(data.time + '..');
+            Beep("C6");
+
           });
 
           socket.on('game-start', function (data) {
+            Beep("C7");
             $('#instructions').hide();
             $('#start').show();
             $('#ingame').hide();
