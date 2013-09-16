@@ -226,6 +226,13 @@ p {
         );
 }
 
+.black {
+    color: black;
+}
+
+.small-img {
+    height: 100px;
+}
 
 .main-container {  
     
@@ -280,6 +287,11 @@ p {
     background-color: #A99DFF;
 }
 
+.btn-black {
+    background-color: grey;
+    color: #FFF;
+}
+
 
 .btn:active {
     background-color: black;
@@ -292,7 +304,7 @@ p {
 }
 
 #render {
-    height: 300px;
+    height: 300px; 
     position: relative;
     width: 100%;
 }
@@ -326,6 +338,8 @@ p {
     font-weight: 700;
     margin-top: 100px;
 }
+
+
 
 @-webkit-keyframes show-player {
     from {

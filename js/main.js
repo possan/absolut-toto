@@ -6,17 +6,26 @@ var colors = [
 ];
 
 function removeElements(data) {
-  $('#render').find('.no_'+data.id).remove();
+  var elem = $('#render').find('.no_'+data.id);
+  elem.removeClass('opened');
+  setTimeout(function () {
+    elem.remove();
+  }, 200);
 }
 
 function drawElements(data) {
   var elem = document.createElement('div');
   elem = $(elem);
   elem.addClass('player no_'+data.id);
-  elem.html('<p>Player<br>#'+data.id+'</p>');
+  elem.addClass('playeranim btn btn-big');
+  elem.addClass('');
+  elem.html('<p>#'+data.id+'</p>');
   elem.css({
     'background-color': colors[data.id%colors.length]
   });
   elem.appendTo($('#render'));
-  elem.addClass('show');
+  setTimeout(function() {
+    elem.addClass('opened');
+  }, 5);
+  //elem.addClass('opened');
 }
