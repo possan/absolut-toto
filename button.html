@@ -9,6 +9,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -41,7 +42,7 @@
                 
                 
                     <div class="centered">
-                        <h2>ABSOLUT PLAY</h2>
+                        <h2>CLICK TO HOLD THE LINE</h2>
                         <button id="a" class="btn btn-big btn-red">PUSH</button><br>
                     </div>
                     <div class="centered">
@@ -70,7 +71,7 @@
             document.addEventListener("touchstart", function() {},false);
               var a = document.getElementById('a');
               var id = '';
-              var socket = io.connect('http://localhost');
+              var socket = io.connect('http://172.16.10.72');
 
               socket.on('welcome', function (data) {
                 console.log('welcome', data);
