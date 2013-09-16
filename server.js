@@ -11,10 +11,11 @@ var g_gamestate = {};
 
 var app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
-    fs = require('fs'),
-    osc = require('node-osc');
+    fs = require('fs')
+    //osc = require('node-osc');
 
-var oscclient = new osc.Client('127.0.0.1', 3333);
+
+//var oscclient = new osc.Client('127.0.0.1', 3333);
 
 app.listen(22222);
 
@@ -47,9 +48,9 @@ function broadcast_queue() {
     queue: g_queue,
     bartenders: g_bartenders
   });
-  oscclient.send('/queue', g_queue.join(','));
+  /*oscclient.send('/queue', g_queue.join(','));
   oscclient.send('/bartenders', JSON.stringify(g_bartenders));
-  oscclient.send('/game', g_game);
+  oscclient.send('/game', g_game);*/
 }
 
 io.sockets.on('connection', function (socket) {
@@ -104,14 +105,14 @@ io.sockets.on('connection', function (socket) {
       g_queue.push(data.id);
       broadcast_queue();
       broadcast('queue-add', { place: pos, id: data.id });
-      oscclient.send('/midi/noteon', 0, 36 + parseInt(data.id, 10) - 1, 127);
+      //oscclient.send('/midi/noteon', 0, 36 + parseInt(data.id, 10) - 1, 127);
     }
   });
 
   socket.on('button-up', function (data) {
     console.log('button-up', data);
 
-    oscclient.send('/midi/noteoff', 0, 36 + parseInt(data.id, 10) - 1, 0);
+    //oscclient.send('/midi/noteoff', 0, 36 + parseInt(data.id, 10) - 1, 0);
 
     // if in use by bartender, ignore button-up.
 
