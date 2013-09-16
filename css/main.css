@@ -71,7 +71,6 @@ body {
 }
 
 .wrapper {
-    width: 90%;
     margin: 0 5%;
 }
 
@@ -316,19 +315,35 @@ h1 {
     font-size: 1.4em;
     font-weight: 700;
     margin-top: 45%;
-    /*margin-top: 100px;
-    line-height: 15px;*/
+}
+
+
+.buttons .btn-big.opened {
+    width: 200px;
+    height: 200px;
+}
+
+.buttons .btn-big.opened.closing {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+
+.buttons .btn-big {
+    width: 1px;
+    height: 1px;
+    -webkit-transition: width 0.33s ease-in-out, height 0.33s ease-in-out, opacity 0.33s ease-in-out;
 }
 
 .playeranim {
-
-
-    -webkit-transition: all 0.24s ease-in-out;
+    -webkit-transition: all 0.33s ease-in-out;
     -webkit-transform: scale( 0 );
 }
 
+
+
 .opened {
-    vertical-align: middle;
     -webkit-transform: scale( 1 );-moz-transform: scale( 1 );-o-transform: scale( 1 );-ms-transform: scale( 1 );transform: scale( 1 );
 }
 
@@ -445,7 +460,6 @@ h1 {
    =============== */
 
     .wrapper {
-        width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
     }
 }
