@@ -3,13 +3,18 @@
 //
 
 var g_queue = [];
-var g_index = 1;
+var g_index = 10;
 var g_allsockets = [];
 var g_bartenders = {};
+var g_game = '';
+var g_gamestate = {};
 
 var app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
-    fs = require('fs')
+    fs = require('fs'),
+    osc = require('node-osc');
+
+var oscclient = new osc.Client('127.0.0.1', 3333);
 
 app.listen(22222);
 
@@ -38,9 +43,13 @@ function broadcast(eventname, eventdata) {
 
 function broadcast_queue() {
   broadcast('queue-update', {
+    game: g_game,
     queue: g_queue,
     bartenders: g_bartenders
   });
+  oscclient.send('/queue', g_queue.join(','));
+  oscclient.send('/bartenders', JSON.stringify(g_bartenders));
+  oscclient.send('/game', g_game);
 }
 
 io.sockets.on('connection', function (socket) {
@@ -67,14 +76,42 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('button-down', function (data) {
     console.log('button-down', data);
-    var pos = g_queue.length;
-    g_queue.push(data.id);
-    broadcast_queue();
-    broadcast('queue-add', { place: pos, id: data.id });
+
+    if (g_game == 'spam') {
+
+      if (typeof(g_gamestate.players[data.id]) == 'undefined')
+        g_gamestate.players[data.id] = 0;
+
+      g_gamestate.players[data.id] ++;
+
+      if (g_gamestate.players[data.id] >= 100) {
+
+        broadcast('game-over', { state: g_gamestate.players, winner: data.id });
+        g_game = 'gameover';
+        setTimeout(function() {
+          broadcast('game-end', {});
+          g_game = '';
+          broadcast_queue();
+        }, 3000);
+      }
+
+      console.log(g_gamestate.players);
+
+      broadcast('game-update', { state: g_gamestate.players });
+
+    } else {
+      var pos = g_queue.length;
+      g_queue.push(data.id);
+      broadcast_queue();
+      broadcast('queue-add', { place: pos, id: data.id });
+      oscclient.send('/midi/noteon', 0, 36 + parseInt(data.id, 10) - 1, 127);
+    }
   });
 
   socket.on('button-up', function (data) {
     console.log('button-up', data);
+
+    oscclient.send('/midi/noteoff', 0, 36 + parseInt(data.id, 10) - 1, 0);
 
     // if in use by bartender, ignore button-up.
 
@@ -92,8 +129,46 @@ io.sockets.on('connection', function (socket) {
     if (idx != -1) {
       g_queue.splice(idx, 1);
       // delete(g_queue[idx]);
+      broadcast('queue-remove', { place: idx, id: data.id });
     }
 
+    broadcast_queue();
+  });
+
+  socket.on('game-start', function (data) {
+    console.log('begin game');
+    g_game = data.game;
+    if (g_game == 'spam') {
+      g_gamestate = {
+        players: {}
+      };
+
+      broadcast('game-init', { state: g_gamestate.players });
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
+      }, 10);
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 4 });
+      }, 1000);
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 3 });
+      }, 2000);
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 2 });
+      }, 3000);
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 1 });
+      }, 4000);
+      setTimeout(function() {
+        broadcast('game-start', { state: g_gamestate.players, time: 0 });
+      }, 5000);
+    }
+    broadcast_queue();
+  });
+
+  socket.on('game-end', function (data) {
+    console.log('end game');
+    g_game = '';
     broadcast_queue();
   });
 

@@ -70,10 +70,7 @@
             document.addEventListener("touchstart", function() {},false);
               var a = document.getElementById('a');
               var id = '';
-
-
-
-              var socket = io.connect('http://localhost');
+              var socket = io.connect('http://172.16.10.97');
 
               socket.on('welcome', function (data) {
                 console.log('welcome', data);
@@ -85,6 +82,14 @@
                 a.addEventListener('mousedown', function() {
                   console.log('press');
                   socket.emit('button-down', { id: id });
+                });
+
+                a.addEventListener('touchstart', function() {
+                    socket.emit('button-down', { id: id });
+                });
+
+                a.addEventListener('touchend', function() {
+                    socket.emit('button-up', { id: id });
                 });
 
                 a.addEventListener('mouseup', function() {

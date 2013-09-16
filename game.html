@@ -12,11 +12,12 @@
 
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/game.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
-    	<div id="gradient"></div>
+      <div id="gradient"></div>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -37,26 +38,31 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
 
-                <h1>RENDERER</h1>
-                    
-                
-                    <div class="centered">
-                    <div id="render" class="centered"></div>
-                    	<!--<ul id="buttonlist">
-                    		<li><button id="a" class="btn btn-small btn-red">PUSH</button></li>
-                    		<li><button id="a" class="btn btn-small btn-blue">PUSH</button></li>
-                    		<li><button id="a" class="btn btn-small btn-pink">PUSH</button></li>
-                    		<li><button id="a" class="btn btn-small btn-green">PUSH</button></li>
-  						        </ul>-->
-                    </div>
-                    <div class="centered">
-                        <br>
-                        <img src="img/ABSOLUT_Logo_white_croped.png" height="35px">
-                    </div>
+                <div id="instructions">
+                  <h3>SPAM!</h3>
+                  <h4>Starts in</h4>
+                  <h2 id="countdown"></h2>
+                </div>
+
+                <div id="start"><h2>START!</h2></div>
+
+                <div id="ingame">
+                  <ul id="bottles">
+                  </ul>
+                  <h2>SPAM!</h2>
+                </div>
+
+                <div id="gameover">
+                  <h2 id="winner">GAME OVER</h2>
+
+                </div>
+
+                <div class="centered">
+                    <br>
+                    <img src="img/ABSOLUT_Logo_white_croped.png" height="35px">
+                </div>
             </div> <!-- #main -->
         </div> <!-- #main-container -->
-
-      
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
@@ -69,25 +75,60 @@
         <script>
           var socket = io.connect('http://localhost');
           var circle_size = 50;
+          var width = 960;
+          var height = 300;
+          var layout = d3.layout.pack();
+          var d3svg = d3.select('#render').append('svg')
+                      .attr('width', width)
+                      .attr('height', height);
           var c_queue = [];
 
-          socket.on('queue-update', function (data) {
-            //console.log('queue-update', data);
-            // socket.emit('my other event', { my: 'data' });
+          $('#instructions').show();
+          $('#start').hide();
+          $('#ingame').hide();
+          $('#gameover').hide();
+
+          socket.on('game-prepare', function (data) {
+            $('#countdown').text(data.time + '..');
           });
 
-          socket.on('queue-add', function (data) {
-            c_queue[data.place] = data.id;
-
-            drawElements(data);
+          socket.on('game-start', function (data) {
+            $('#instructions').hide();
+            $('#start').show();
+            $('#ingame').hide();
+            $('#gameover').hide();
+            setTimeout(function() {
+              $('#start').hide();
+              $('#ingame').show();
+            }, 1000);
           });
 
-          socket.on('queue-remove', function (data) {
-            var idx = c_queue.indexOf(data.id);
-            c_queue.splice(idx,1);
+          socket.on('game-over', function (data) {
+            $('#instructions').hide();
+            $('#start').hide();
+            $('#ingame').hide();
+            $('#gameover').show();
+            $('#winner').html('WINNER #'+data.winner);
+          });
 
-            removeElements(data);
+          socket.on('game-end', function (data) {
+            location = 'renderer.html';
+          });
+
+          socket.on('game-update', function (data) {
+            console.log('game-update', data);
+
+            var html = '';
+            var player;
+            for(player in data.state) {
+              var hits = data.state[player];
+              var cls = 'bottle50';
+              html += '<li class="bottle"><div style=\"height:'+hits+'%;\"></div><span>'+hits+'</span></li>';
+            }
+            $('#bottles').html(html);
+
           });
         </script>
     </body>
 </html>
+

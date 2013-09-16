@@ -234,7 +234,12 @@ h1 {
     font-size: 2em;
     border: 2px solid white;
     outline: none;
-    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .btn-big {
@@ -282,13 +287,55 @@ h1 {
     text-align: center;
 }
 
+#render {
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
 #buttonlist li {
     display: inline;
     list-style-type: none;
     padding-right: 20px;
 }
 
+.player {
+    border-radius: 100%;
+    display: inline-block;
+    float: left;
+    height: 240px;
+    opacity: 0;
+    width: 240px;
+    transition: all 0.24s cubic-bezier(0.32,0.87,0.25,1.12);
+    /*-webkit-transform: translate3d(0,0,0);*/
+    -webkit-animation-name: show-player;
+    -webkit-animation-duration: 0.24s;
+    -webkit-anumation-timing-function: cubic-bezier(0.32,0.87,0.25,1.12);
+}
 
+.player.show {
+    opacity: 1;
+}
+
+.player p {
+    color: #000;
+    font-size: 1.4em;
+    font-weight: 700;
+    margin-top: 100px;
+}
+
+@-webkit-keyframes show-player {
+    from {
+        height: 200px;
+        opacity: 0;
+        width: 200px;
+    }
+    to {
+        height: 240px;
+        opacity: 1;
+        width: 240px;
+    }
+}
 
 
 
