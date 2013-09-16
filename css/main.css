@@ -351,7 +351,17 @@ h1 {
 }
 
 
+.serve {
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
 
+.serve input {
+    border: 0;
+    background: rgba(255,255,255,0.7);
+    outline: none;
+    padding: 10px 8px;
+}
 
 /* ==========================================================================
    Media Queries

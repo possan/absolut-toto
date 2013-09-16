@@ -37,14 +37,13 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
 
-                <h1>Bartender</h1>
+                <h1>BARTENDER</h1>
                     
                 
                     <div class="centered">
-                      <div id="render" class="centered"></div>
-                      <ul id="buttonlist">
-                        
-                      </ul>
+                      <div class="centered">
+                        <div class="player btn btn-small"></div>
+                      </div>
                     </div>
 
                     
@@ -52,7 +51,7 @@
 
 
 
-                    <p>Customer #<input id="customer"> <button id="serve">SERVE</button> <button id="done">DONE</button></p>
+                    <p class="serve centered">Customer #<input id="customer"> <button id="serve" class="btn btn-small">SERVE</button> <button id="done" class="btn btn-small">DONE</button></p>
                     
                      <div class="centered">
                       
@@ -100,12 +99,14 @@
           var done = document.getElementById('done');
           var startgame = document.getElementById('startgame');
           var endgame = document.getElementById('endgame');
+          var hasWinner = false;
 
           done.addEventListener('click', function() {
             socket.emit('bartender-done', {
               //bartender: namex.value,
               customer: customer.value
             });
+            hasWinner = false;
           });
 
           serve.addEventListener('click', function() {
@@ -114,12 +115,14 @@
               customer: customer.value
             });
             // customer.value = '';
+            hasWinner = false;
           });
 
           startgame.addEventListener('click', function() {
             socket.emit('game-start', {
               game: 'spam'
             });
+            hasWinner = false;
           });
 
           endgame.addEventListener('click', function() {
@@ -129,33 +132,24 @@
 
           socket.on('queue-update', function (data) {
             console.log('queue-update', data);
-            // socket.emit('my other event', { my: 'data' });
-           /* var li = document.createElement('li');
-            li.innerHTML = JSON.stringify(data);
-            ul.appendChild(li);*/
 
-
-            if (data.queue.length > 0) drawStaticElements(data.queue[0]);
-
-            
+            if (data.queue.length > 0 && !hasWinner) drawStaticElements(data.queue[0]);
           });
 
           socket.on('queue-add', function (data) {
             console.log('queue-add', data);
             c_queue[data.place] = data.id;
-            console.log("Data id: ",data.id);
-            drawStaticElements(data);
-
-            
           });
 
           socket.on('queue-remove', function (data) {
             var idx = c_queue.indexOf(data.id);
             c_queue.splice(idx,1);
-
-            //removeElements(data);
           });
 
+          socket.on('game-over', function (data) {
+            drawStaticElements(data.winner);
+            hasWinner = true;
+          });
           
         </script>
     </body>

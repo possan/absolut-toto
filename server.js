@@ -97,7 +97,7 @@ io.sockets.on('connection', function (socket) {
           broadcast('game-end', {});
           g_game = '';
           broadcast_queue();
-        }, 3000);
+        }, 5000);
       }
 
       console.log(g_gamestate.players);
@@ -195,8 +195,9 @@ io.sockets.on('connection', function (socket) {
       }, 5000);
       setTimeout(function () {
         broadcast('game-start', { state: g_gamestate.players, time: 0 });
-      }, 5000 + Math.floor(Math.random() * 1000));
+      }, 5000 + Math.floor(Math.random() * (30 - 10))*100);
     }
+
     broadcast_queue();
   });
 
