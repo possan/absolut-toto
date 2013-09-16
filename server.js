@@ -168,6 +168,35 @@ io.sockets.on('connection', function (socket) {
         broadcast('game-start', { state: g_gamestate.players, time: 0 });
       }, 5000);
     }
+
+    if (g_game == 'react') {
+      g_gamestate = {
+        players: {}
+      };
+
+      broadcast('game-init', { state: g_gamestate.players });
+      setTimeout(function() {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
+      }, 10);
+      setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 5 });
+      }, 1000);
+      setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 4 });
+      }, 2000);
+      setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 3 });
+      }, 3000);
+      setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 2 });
+      }, 4000);
+      setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 1 });
+      }, 5000);
+      setTimeout(function () {
+        broadcast('game-start', { state: g_gamestate.players, time: 0 });
+      }, 5000 + Math.floor(Math.random() * 1000));
+    }
     broadcast_queue();
   });
 
