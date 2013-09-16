@@ -8,10 +8,10 @@ var hostname = document.location.hostname;
 
 function removeElements(data) {
   var elem = $('#render').find('.no_'+data.id);
-  elem.removeClass('opened');
-  setTimeout(function () {
+  elem.addClass('closing');
+  setTimeout(function() {
     elem.remove();
-  }, 200);
+  }, 400);
 }
 
 function drawElements(data) {
@@ -20,7 +20,7 @@ function drawElements(data) {
   elem.addClass('player no_'+data.id);
   elem.addClass('playeranim btn btn-big');
   elem.addClass('');
-  elem.html('<p>#'+data.id+'</p>');
+  elem.html('<p></p>');
   elem.css({
     'background-color': colors[data.id%colors.length]
   });
