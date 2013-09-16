@@ -215,6 +215,13 @@ h1 {
         );
 }
 
+.black {
+    color: black;
+}
+
+.small-img {
+    height: 100px;
+}
 
 .main-container {  
     
