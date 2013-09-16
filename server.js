@@ -14,6 +14,10 @@ var app = require('http').createServer(handler),
     fs = require('fs')
     //osc = require('node-osc');
 
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 //var oscclient = new osc.Client('127.0.0.1', 3333);
 
