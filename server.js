@@ -21,7 +21,7 @@ var app = require('http').createServer(handler),
 
 //var oscclient = new osc.Client('127.0.0.1', 3333);
 
-app.listen(8080);
+app.listen(22222);
 
 function handler (req, res) {
   console.log('req.url', req.url);
