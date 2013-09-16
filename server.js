@@ -104,11 +104,11 @@ io.sockets.on('connection', function (socket) {
 
       broadcast('game-update', { state: g_gamestate.players });
     } else if (g_game == 'react') {
-      
-      if (typeof(g_gamestate.players[data.id]) == 'undefined')
-        g_gamestate.players[data.id] = 0;
 
+      g_gamestate.players[data.id] = (+new Date()) - g_gamestate.gamestart;
 
+      console.log(g_gamestate.players);
+      broadcast('game-update', { state: g_gamestate.players });
 
     } else {
       var pos = g_queue.length;
@@ -200,17 +200,32 @@ io.sockets.on('connection', function (socket) {
         broadcast('game-prepare', { state: g_gamestate.players, time: 1 });
       }, 5000);
       setTimeout(function () {
+        broadcast('game-prepare', { state: g_gamestate.players, time: 0 });
+      }, 5000);
+      setTimeout(function () {
         broadcast('game-start', { state: g_gamestate.players, time: 0 });
-      }, 6000);
+        g_gamestate.gamestart = +new Date();
+      }, 5000 + Math.floor(Math.random() * (3000 - 1000 + 1) + 1000));
     }
 
     broadcast_queue();
   });
 
   socket.on('game-end', function (data) {
-    console.log('end game');
-    g_game = '';
+    console.log('end game', data);
+    g_game = data.game;
     broadcast_queue();
+
+    if (g_game == 'react') {
+      var sortable = [];
+      for (var id in g_gamestate.players) {
+        sortable.push([id, g_gamestate.players[id]]);
+      }
+      var winner = sortable.sort(function(a,b) { return a[1]-b[1]; });
+      winner = winner[0];
+
+      broadcast('game-over', { state: g_gamestate.players, winner: winner });
+    }
   });
 
   socket.on('bartender-serve', function (data) {

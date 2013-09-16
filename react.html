@@ -83,18 +83,19 @@
           $('#gameover').hide();
 
           socket.on('game-prepare', function (data) {
-            $('#countdown').text(data.time + '..');
+            Beep('C6');
+            if (data.time >= 1) {
+              $('#countdown').text(data.time + '..');
+            } else {
+              $('#instructions').hide();
+              $('#start').show();
+            }
           });
 
           socket.on('game-start', function (data) {
-            $('#instructions').hide();
-            $('#start').show();
-            $('#ingame').hide();
-            $('#gameover').hide();
-            setTimeout(function() {
-              $('#start').hide();
-              $('#ingame').show();
-            }, 1000 + Math.floor(Math.random() * (30 - 10))*100);
+            Beep('C7');
+            $('#start').hide();
+            $('#ingame').show();
           });
 
           socket.on('game-over', function (data) {
@@ -102,12 +103,15 @@
             $('#start').hide();
             $('#ingame').hide();
             $('#gameover').show();
-            $('#winner').html('<p class="win">WINNER &#9758; <span style="background-color:'+colors[data.winner%colors.length]+';"></span></p><p>The bartender will now take your order.</p>');
+            $('#winner').html('<p class="win">WINNER &#9758; <span style="background-color:'+colors[data.winner[0]%colors.length]+';"></span></p><p>The bartender will now take your order.</p>');
+            setTimeout(function () {
+              location = "renderer.html";
+            }, 5000);
           });
 
           socket.on('game-end', function (data) {
             console.log("game end");
-            //location = 'renderer.html';
+            location = 'renderer.html';
           });
 
           socket.on('game-update', function (data) {
@@ -116,12 +120,11 @@
             var html = '';
             var player;
             for(player in data.state) {
-              var hits = data.state[player];
+              var time = data.state[player];
               var cls = 'bottle50';
-              html += '<li class="bottle"><div style=\"height:'+hits+'%;\"></div><span>'+hits+'</span>';
+              html += '<li><span>'+time+' milliseconds</span>';
               html += '<div class="player-badge" style="background-color:'+colors[player%colors.length]+';"></div></li>';
             }
-            console.log(html);
             $('#bottles').html(html);
 
           });
