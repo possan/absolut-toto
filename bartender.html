@@ -137,6 +137,7 @@
 
           endgame.addEventListener('click', function() {
             socket.emit('game-end', {
+              game: currentGame
             });
           });
 
