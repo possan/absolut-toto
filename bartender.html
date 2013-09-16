@@ -143,12 +143,13 @@
 
           socket.on('queue-update', function (data) {
             console.log('queue-update', data);
-            if (data.queue.length > 0 && !hasWinner) {
+            if (data.queue.length > 0) {
               last_id = data.queue[0];
-              drawStaticElements(last_id);
-            } else {
-              last_id = '';
-              drawStaticElements(last_id);
+              if(!hasWinner) {
+                drawStaticElements(last_id);
+              } else {
+                drawStaticElements(last_id);
+              }
             }
           });
 

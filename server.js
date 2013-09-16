@@ -111,11 +111,15 @@ io.sockets.on('connection', function (socket) {
       broadcast('game-update', { state: g_gamestate.players });
 
     } else {
-      var pos = g_queue.length;
-      g_queue.push(data.id);
-      broadcast_queue();
-      broadcast('queue-add', { place: pos, id: data.id });
-      //oscclient.send('/midi/noteon', 0, 36 + parseInt(data.id, 10) - 1, 127);
+
+      var idx = g_queue.indexOf(data.id);
+      if (idx == -1) {
+        var pos = g_queue.length;
+        g_queue.push(data.id);
+        broadcast_queue();
+        broadcast('queue-add', { place: pos, id: data.id });
+        //oscclient.send('/midi/noteon', 0, 36 + parseInt(data.id, 10) - 1, 127);
+      }
     }
   });
 
@@ -128,13 +132,15 @@ io.sockets.on('connection', function (socket) {
 
     var in_progress = false;
     var key;
-    while(key in g_bartenders) {
+    for(key in g_bartenders) {
       if (g_bartenders[key] == data.id)
         in_progress = true;
     }
 
-    if (in_progress)
+    if (in_progress) {
+      console.log('release ignored, in progress.', g_bartenders);
       return;
+    }
 
     var idx = g_queue.indexOf(data.id);
     if (idx != -1) {
@@ -233,6 +239,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('bartender-serve', function (data) {
+    console.log('bartender-serve', data);
     // console.log('button-up', data);
     // g_queue.push('-'+data.id);
     g_bartenders[data.bartender] = data.customer;
@@ -241,16 +248,21 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('bartender-done', function (data) {
-    // console.log('button-up', data);
+    console.log('bartender-done', data);
     // g_queue.push('-'+data.id);
-    if (g_bartenders[data.bartender]) {
+    /* if (g_bartenders[data.bartender]) {
       var customer = g_bartenders[data.bartender];
+      console.log('release bartender', data.bartender);
       delete(g_bartenders[data.bartender]);
-      var idx = g_queue.indexOf(customer);
+      */
+      var idx = g_queue.indexOf(data.customer);
+      console.log('remove index', idx, g_queue);
       if (idx != -1) {
         g_queue.splice(idx, 1);
+        broadcast('queue-remove', { place: idx, id: data.customer });
       }
-    }
+      g_bartenders = [];
+    // }
     broadcast_queue();
     broadcast('bartender-done', { bartender: data.bartender });
   });
