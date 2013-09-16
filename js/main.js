@@ -4,6 +4,7 @@ var colors = [
   "#FF94FF",
   "#7FFF9F"
 ];
+var hostname = document.location.hostname;
 
 function removeElements(data) {
   var elem = $('#render').find('.no_'+data.id);
@@ -27,34 +28,15 @@ function drawElements(data) {
   setTimeout(function() {
     elem.addClass('opened');
   }, 5);
-  //elem.addClass('opened');
 }
 
-function drawStaticElements(data) {  
-  var 
-  colors = [
-    "#FF9EA0",
-    "#A99DFF",
-    "#FF94FF",
-    "#7FFF9F"
-  ];
-
-  var elem = document.createElement('div');
-  elem = $(elem);
-  elem.addClass('player no_'+data);
-  elem.addClass('btn btn-big');
-  elem.addClass('');
+function drawStaticElements(data) {
+  var elem = $('.player');
   elem.html('<p>#'+data+'</p>');
   elem.css({
     'background-color': colors[data%colors.length]
   });
-  elem.appendTo($('#render'));
-  
-  //elem.addClass('opened');
 }
-
-
-
 
 MonoSynth = function (audioContext){
 
@@ -160,7 +142,3 @@ function Beep(note){
   },300);
 
 }
-
-
-
-

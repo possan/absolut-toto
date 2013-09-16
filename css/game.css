@@ -67,6 +67,7 @@ div#gameover {
 
 #winner p ~ p {
 	font-size: 0.5em;
+	line-height: 1.2;
 }
 
 .win {

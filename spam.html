@@ -72,7 +72,7 @@
         <script src="js/main.js"></script>
 
         <script>
-          var socket = io.connect('http://localhost');
+          var socket = io.connect('http://'+hostname);
           var c_queue = [];
 
           $('#instructions').show();
@@ -108,7 +108,7 @@
 
           socket.on('game-end', function (data) {
             console.log("game end");
-            //location = 'renderer.html';
+            location = 'renderer.html';
           });
 
           socket.on('game-update', function (data) {

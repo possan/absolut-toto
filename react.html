@@ -42,17 +42,17 @@
 
                 <div id="instructions">
                   <h3>REACT!</h3>
-                  <p>Hit the button as many times as possible!<br>First to fill the bottle wins.</p>
+                  <p>The fastest to react wins!<br>Keep your hand on the button after you've hit it.</p>
                   <h4>Starts in</h4>
                   <h2 id="countdown"></h2>
                 </div>
 
-                <div id="start"><h2>START!</h2></div>
+                <div id="start"><h2>REACT...</h2></div>
 
                 <div id="ingame">
                   <ul id="bottles">
                   </ul>
-                  <h2 class="blink">SPAM!</h2>
+                  <h2 class="blink">NOW!</h2>
                 </div>
 
                 <div id="gameover">
@@ -74,7 +74,7 @@
         <script src="js/main.js"></script>
 
         <script>
-          var socket = io.connect('http://localhost');
+          var socket = io.connect('http://'+hostname);
           var c_queue = [];
 
           $('#instructions').show();
@@ -94,7 +94,7 @@
             setTimeout(function() {
               $('#start').hide();
               $('#ingame').show();
-            }, 1000);
+            }, 1000 + Math.floor(Math.random() * (30 - 10))*100);
           });
 
           socket.on('game-over', function (data) {
